@@ -9,7 +9,16 @@ A simple Path of Exile hack.
 - Auto-Mana
 - Zoom Hack
 
+## Compiling
+### Prerequisites
+- Microsoft Visual Studio 2022 alongside with Windows SDK</p>
+- This <a href="https://cdn.discordapp.com/attachments/1162091567872475136/1163930533600960632/driver.dll?ex=65415dc7&is=652ee8c7&hm=c966ecf89d56816c7284187d53151714db42ed46b96193da6f5b810952245c43&">mouse/keyboard driver</a> (Place it into the same directory as the executable you compile.)
+
+### Compiling from source 
+Open '<b>example menu.sln</b>' in Visual Studio 2022, set build configuration to <b>Release | x64</b>, <i>Build->Build Solution</i> and '<b>build.exe</b>' will be created.
+
 ## To-do
+- Auto-updating offsets (signature scanning)
 - Configuration system
 - Map Hack (maybe?)
 
