@@ -2,40 +2,73 @@
 #include <iostream>
 #include <thread>
 
+#include "dependencies/globals.h"
 #include "dependencies/gui/gui.h"
+#include "core/memory/memory.h"
 
-int __stdcall wWinMain(HINSTANCE instance, HINSTANCE previousInstance, PWSTR arguments, int commandShow) {
-#if _DEBUG
+#include "core/game/sdk.h"
+#include "core/features.h"
+
+int __stdcall wWinMain(HINSTANCE instance, HINSTANCE previousInstance, PWSTR arguments, int commandShow)
+{
 	AllocConsole();
 	FILE* file;
 	freopen_s(&file, "CONOUT$", "w", stdout);
 
-	printf("base by antalnn\n");
-#endif
-
-	// create gui
+	// Create GUI
 	gui::CreateHWindow("example window");
 	gui::CreateDevice();
 	gui::CreateImGui();
 
+	// Find process & get necessities
+	if (!mem.GetProcessID("PathOfExileSteam.exe"))
+	{
+		LogAndExit("[-] Unable to find process.\n");
+	}
+
+	if (!mem.GetProcessHandle())
+	{
+		LogAndExit("[-] Unable to get handle of the process.\n");
+	}
+
+	globals::BaseModule = mem.GetProcessModule("PathOfExileSteam.exe");
+	if (!globals::BaseModule)
+	{
+		LogAndExit("[-] Unable to get handle of the process.\n");
+	}
+
+	globals::BaseAddress = mem.Read<uintptr_t>(globals::BaseModule + offsets::player_base_address);
+	if (!globals::BaseAddress) {
+		LogAndExit("[-] Invalid Base Address\n");
+	}
+	std::cout << std::hex << "Base Address: 0x" << globals::BaseAddress << '\n';
+
+	// Main loop
 	while (gui::isRunning)
 	{
-		gui::BeginRender();
+		// Updating player data
+		player.UpdateData();
 
+		// Features
+		hack::AutoHeal();
+		hack::AutoMana();
+		hack::Zoom();
+
+		// Rendering GUI
+		gui::BeginRender();
 		gui::Render();
 		gui::EndRender();
 
 		std::this_thread::sleep_for(std::chrono::milliseconds(1));
 	}
 
-	// destroy gui
+	// Destroy GUI
 	gui::DestroyImGui();
 	gui::DestroyDevice();
 	gui::DestroyHWindow();
 
-#if _DEBUG
-	fclose(file);
-#endif
+	if (file != NULL)
+		fclose(file);
 
 	return EXIT_SUCCESS;
 }

@@ -135,6 +135,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>d3d9.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -155,10 +156,14 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>d3d9.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <UACExecutionLevel>AsInvoker</UACExecutionLevel>
+      <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="core\game\offsets.h" />
+    <ClInclude Include="core\features.h" />
+    <ClInclude Include="core\memory\memory.h" />
+    <ClInclude Include="dependencies\globals.h" />
     <ClInclude Include="dependencies\gui\custom_imgui.h" />
     <ClInclude Include="dependencies\gui\gui.h" />
     <ClInclude Include="dependencies\gui\imgui\imconfig.h" />
@@ -169,8 +174,10 @@
     <ClInclude Include="dependencies\gui\imgui\imstb_rectpack.h" />
     <ClInclude Include="dependencies\gui\imgui\imstb_textedit.h" />
     <ClInclude Include="dependencies\gui\imgui\imstb_truetype.h" />
+    <ClInclude Include="core\game\sdk.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="core\memory\memory.cpp" />
     <ClCompile Include="dependencies\gui\custom_imgui.cpp" />
     <ClCompile Include="dependencies\gui\gui.cpp" />
     <ClCompile Include="main.cpp" />

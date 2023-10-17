@@ -1,9 +1,12 @@
 #include "gui.h"
 
+#include "../globals.h"
+#include "../../core/game/sdk.h"
+
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_dx9.h"
 #include "imgui/imgui_impl_win32.h"
-#include  "custom_imgui.h"
+#include "custom_imgui.h"
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND window, UINT message, WPARAM wideParameter, LPARAM longParameter);
 
@@ -91,8 +94,8 @@ void gui::CreateHWindow(const char* windowName) noexcept
 		"class001",
 		windowName,
 		WS_POPUP,
-		(screen.x / 2 - WIDTH / 2),
-		(screen.y / 2 - HEIGHT / 2),
+		(screen.x / 2 - static_cast<float>(WIDTH) / 2),
+		(screen.y / 2 - static_cast<float>(HEIGHT) / 2),
 		WIDTH,
 		HEIGHT,
 		0,
@@ -238,12 +241,39 @@ void gui::Render() noexcept
 	ImGui::SetNextWindowPos({ 0, 0 });
 	ImGui::SetNextWindowSize({ WIDTH, HEIGHT });
 
-	ImGui::Begin("example window", &isRunning, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoMove);
+	ImGui::Begin("unorthodox.club [Path of Exile]", &isRunning, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoMove);
 	{
-		static int count{ 0 };
-		if (ImGui::Button("click me"))
-			count++;
-		ImGui::Text("clicked: %d times", count);
+		ImGui::Checkbox("Auto-Heal", &globals::bAutoHeal);
+		if (globals::bAutoHeal)
+		{
+			ImGui::SameLine();
+			ImGui::Combo("Keybind##heal_keybind", &globals::iSelectedHealKeybind, globals::Keybinds, IM_ARRAYSIZE(globals::Keybinds));
+			ImGui::SliderInt("##heal_percentage", &globals::iHealPercentage, 1, 100, "%d%%");
+			ImGui::SameLine();
+			ImGui::Text("Heal at (%d/%d)", (player.m_iMaxHealth * globals::iHealPercentage / 100), player.m_iMaxHealth);
+			ImGui::SliderInt("Delay##heal_delay", &globals::iHealDelay, 100, 1000, "%d(ms)");
+		}
+
+		ImGui::Spacing();
+		ImGui::Separator();
+		ImGui::Spacing();
+
+		ImGui::Checkbox("Auto-Mana", &globals::bAutoMana);
+		if (globals::bAutoMana)
+		{
+			ImGui::SameLine();
+			ImGui::Combo("Keybind##mana_keybind", &globals::iSelectedManaKeybind, globals::Keybinds, IM_ARRAYSIZE(globals::Keybinds));
+			ImGui::SliderInt("##mana_percentage", &globals::iManaPercentage, 1, 100, "%d%%");
+			ImGui::SameLine();
+			ImGui::Text("Mana at (%d/%d)", (player.m_iMaxMana * globals::iManaPercentage / 100), player.m_iMaxMana);
+			ImGui::SliderInt("Delay##mana_delay", &globals::iManaDelay, 100, 1000, "%d(ms)");
+		}
+
+		ImGui::Checkbox("Zoom", &globals::bZoom);
+		if (globals::bZoom)
+		{
+			ImGui::SliderFloat("Value##zoom_value", &globals::fZoomValue, 1.f, 5.f);
+		}
 	}
 	ImGui::End();
 }
