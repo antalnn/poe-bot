@@ -10,6 +10,9 @@ namespace hack
 		if (!globals::bAutoHeal)
 			return;
 
+		if (!player.ValidationCheck())
+			return;
+
 		// Bypass 'Too many actions' check
 		std::chrono::steady_clock::time_point currentTime = std::chrono::steady_clock::now();
 		if (!(std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - healthLastExecutionTime) >= std::chrono::milliseconds(globals::iHealDelay)))
@@ -25,9 +28,12 @@ namespace hack
 		{
 			int key = driver.toVK(globals::GetKeybind(globals::iSelectedHealKeybind));
 
-			driver.key(key, 1);
-			Sleep(1);
-			driver.key(key, 2);
+			if (globals::IsForegroundWindow())
+			{
+				driver.key(key, 1);
+				Sleep(1);
+				driver.key(key, 2);
+			}
 		}
 	}
 
@@ -35,6 +41,9 @@ namespace hack
 	inline void AutoMana()
 	{
 		if (!globals::bAutoMana)
+			return;
+
+		if (!player.ValidationCheck())
 			return;
 
 		// Bypass 'Too many actions' check
@@ -51,10 +60,12 @@ namespace hack
 		if (currentMana <= potionAt)
 		{
 			int key = driver.toVK(globals::GetKeybind(globals::iSelectedManaKeybind));
-
-			driver.key(key, 1);
-			Sleep(1);
-			driver.key(key, 2);
+			if (globals::IsForegroundWindow())
+			{
+				driver.key(key, 1);
+				Sleep(1);
+				driver.key(key, 2);
+			}
 		}
 	}
 

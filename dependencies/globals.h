@@ -61,4 +61,13 @@ namespace globals
 			break;
 		}
 	}
+
+	inline bool IsForegroundWindow()
+	{
+		HWND hwndWindow = FindWindowA(NULL, "Path of Exile");
+		if (hwndWindow == GetForegroundWindow())
+			return true;
+
+		return false;
+	}
 }

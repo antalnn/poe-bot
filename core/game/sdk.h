@@ -15,15 +15,25 @@ public:
 
 	void UpdateData()
 	{
-		if (!this->m_iCurrentHealth || !this->m_iMaxHealth || !this->m_iCurrentMana || !this->m_iMaxMana || this->m_iCurrentHealth > 100000)
-		{
-			globals::BaseAddress = mem.Read<uintptr_t>(globals::BaseModule + offsets::player_base_address);
-		}
-
+		globals::BaseAddress = mem.Read<uintptr_t>(globals::BaseModule + offsets::player_base_address);
 		this->m_iCurrentHealth = (int)mem.ReadArray(globals::BaseAddress, offsets::m_iHealth, 4);
 		this->m_iMaxHealth = (int)mem.ReadArray(globals::BaseAddress, offsets::m_iMaxHealth, 4);
 		this->m_iCurrentMana = (int)mem.ReadArray(globals::BaseAddress, offsets::m_iMana, 4);
 		this->m_iMaxMana = (int)mem.ReadArray(globals::BaseAddress, offsets::m_iMaxMana, 4);
+	}
+
+	bool ValidationCheck()
+	{
+		constexpr int16_t INVALID_VALUE{ 0x7530 };
+
+		if (!globals::BaseAddress ||
+			!this->m_iCurrentHealth || this->m_iCurrentHealth > INVALID_VALUE || this->m_iCurrentHealth < 0 ||
+			!this->m_iMaxHealth || this->m_iMaxHealth > INVALID_VALUE || this->m_iMaxHealth < 0 ||
+			!this->m_iCurrentMana || this->m_iCurrentMana > INVALID_VALUE || this->m_iCurrentMana < 0 ||
+			!this->m_iMaxMana || this->m_iMaxMana > INVALID_VALUE || this->m_iMaxMana < 0)
+			return false;
+
+		return true;
 	}
 };
 inline CPlayer player;
