@@ -4,8 +4,8 @@ namespace offsets
 {
 
 	// Steam; Patch: 3.22.1d
-	constexpr uint32_t player_base_address = 0x02E8F068;
-	constexpr uint32_t zoom_base_address = player_base_address - 0x88;
+	constexpr uint32_t player_base_address = 0x02E4F258;
+	constexpr uint32_t zoom_base_address = player_base_address + 0x310;
 
 	// Netvars
 	constexpr uint32_t m_iHealth[4] = { 0x58, 0x50, 0x48, 0x278 };
