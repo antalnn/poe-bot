@@ -20,7 +20,6 @@ Open '<b>example menu.sln</b>' in Visual Studio 2022, set build configuration to
 ## To-do
 - Auto-updating offsets (signature scanning)
 - Configuration system
-- Heal/Mana only when game is focused
 - Auto-detect flask key (maybe?)
 - Map Hack (maybe?)
 
