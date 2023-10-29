@@ -9,6 +9,9 @@ A simple Path of Exile hack.
 - Auto-Mana
 - Zoom Hack
 
+## Download
+Too lazy to update & compile yourself? You can download the latest version of the cheat at our <a href="https://discord.gg/aCQ7whJAgs">discord server</a>.
+
 ## Compiling
 ### Prerequisites
 - Microsoft Visual Studio 2022 alongside with Windows SDK</p>
