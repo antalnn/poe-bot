@@ -73,3 +73,5 @@ build/Release/imgui_widgets.obj
 build/Release/main.obj
 build/Release/memory.obj
 build/Release/vc143.pdb
+/.vs/example menu
+/build
