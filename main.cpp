@@ -19,6 +19,12 @@ int __stdcall wWinMain(HINSTANCE instance, HINSTANCE previousInstance, PWSTR arg
 	gui::CreateHWindow("example window");
 	gui::CreateDevice();
 	gui::CreateImGui();
+	
+	// check for secure boot status
+	if (!globals::IsSecureBootEnabled())
+	{
+		LogAndExit("[-] Secure boot has to be disabled.\n");
+	}
 
 	// Find process & get necessities
 	if (!mem.GetProcessID("PathOfExileSteam.exe"))

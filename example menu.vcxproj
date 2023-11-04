@@ -163,6 +163,8 @@
     <ClInclude Include="core\game\offsets.h" />
     <ClInclude Include="core\features.h" />
     <ClInclude Include="core\memory\memory.h" />
+    <ClInclude Include="dependencies\config\config.h" />
+    <ClInclude Include="dependencies\config\simpleini.h" />
     <ClInclude Include="dependencies\globals.h" />
     <ClInclude Include="dependencies\gui\custom_imgui.h" />
     <ClInclude Include="dependencies\gui\gui.h" />

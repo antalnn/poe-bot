@@ -1,6 +1,7 @@
 #include "gui.h"
 
 #include "../globals.h"
+#include "../config/config.h"
 #include "../../core/game/sdk.h"
 
 #include "imgui/imgui.h"
@@ -251,13 +252,9 @@ void gui::Render() noexcept
 			ImGui::SliderInt("##heal_percentage", &globals::iHealPercentage, 1, 100, "%d%%");
 			ImGui::SameLine();
 			ImGui::Text("Heal at (%d/%d)", (player.m_iMaxHealth * globals::iHealPercentage / 100), player.m_iMaxHealth);
-			ImGui::SliderInt("Delay##heal_delay", &globals::iHealDelay, 100, 1000, "%d(ms)");
+			ImGui::SliderInt("Delay##heal_delay", &globals::iHealDelay, 100, 2000, "%d(ms)");
 		}
-
 		ImGui::Spacing();
-		ImGui::Separator();
-		ImGui::Spacing();
-
 		ImGui::Checkbox("Auto-Mana", &globals::bAutoMana);
 		if (globals::bAutoMana)
 		{
@@ -266,14 +263,23 @@ void gui::Render() noexcept
 			ImGui::SliderInt("##mana_percentage", &globals::iManaPercentage, 1, 100, "%d%%");
 			ImGui::SameLine();
 			ImGui::Text("Mana at (%d/%d)", (player.m_iMaxMana * globals::iManaPercentage / 100), player.m_iMaxMana);
-			ImGui::SliderInt("Delay##mana_delay", &globals::iManaDelay, 100, 1000, "%d(ms)");
+			ImGui::SliderInt("Delay##mana_delay", &globals::iManaDelay, 100, 2000, "%d(ms)");
 		}
-
+		ImGui::Spacing();
 		ImGui::Checkbox("Zoom", &globals::bZoom);
 		if (globals::bZoom)
 		{
 			ImGui::SliderFloat("Value##zoom_value", &globals::fZoomValue, 1.f, 5.f);
 		}
+
+		ImGui::SetCursorPosY(ImGui::GetWindowHeight() - 30.f);
+		ImGui::BeginGroup();
+		if (ImGui::Button("save", ImVec2(236, -1)))
+			config::saveConfig();
+		ImGui::SameLine();
+		if (ImGui::Button("load", ImVec2(236, -1)))
+			config::loadConfig();
+		ImGui::EndGroup();
 	}
 	ImGui::End();
 }
