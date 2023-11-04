@@ -3,6 +3,9 @@ A simple Path of Exile hack.
 
 ![showcase_image](https://github.com/antalnn/unorthodoxclub-poe/assets/58046021/30a21a23-d8b7-4840-9178-f5ed573ec2ee)
 
+## Download
+Too lazy to update & compile yourself? You can download the latest version of the cheat at our <a href="https://discord.gg/aCQ7whJAgs">discord server</a>.
+
 ## Features
 - Supports Steam version only
 - Auto-Heal
