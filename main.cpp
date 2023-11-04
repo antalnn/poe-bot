@@ -21,7 +21,7 @@ int __stdcall wWinMain(HINSTANCE instance, HINSTANCE previousInstance, PWSTR arg
 	gui::CreateImGui();
 	
 	// check for secure boot status
-	if (!globals::IsSecureBootEnabled())
+	if (globals::IsSecureBootEnabled())
 	{
 		LogAndExit("[-] Secure boot has to be disabled.\n");
 	}
