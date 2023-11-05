@@ -11,6 +11,7 @@ Too lazy to update & compile yourself? You can download the latest version of th
 - Auto-Heal
 - Auto-Mana
 - Zoom Hack
+- Config
 
 ## Compiling
 ### Prerequisites
