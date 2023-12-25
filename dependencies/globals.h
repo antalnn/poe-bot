@@ -1,7 +1,10 @@
 #pragma once
 #include <iostream>
 
-inline void LogAndExit(std::string message) {
+inline void LogAndExit(std::string message, FILE* fs = nullptr) {
+	if (fs != nullptr)
+		fclose(fs);
+
 	std::cout << message;
 	system("pause");
 	exit(1);
@@ -10,6 +13,7 @@ inline void LogAndExit(std::string message) {
 namespace globals
 {
 	inline uintptr_t BaseModule{};
+	inline uintptr_t BaseModuleSize{};
 	inline uintptr_t BaseAddress{};
 
 	// Global feature variables

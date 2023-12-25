@@ -4,6 +4,8 @@
 
 #include "../../dependencies/globals.h"
 
+#include <TlHelp32.h>
+
 class CMemory
 {
 private:
@@ -12,7 +14,7 @@ private:
 public:
 	bool GetProcessID(const char* process_name);
 	bool GetProcessHandle();
-	uintptr_t GetProcessModule(const char* module_name);
+	MODULEENTRY32 GetModuleEntry(const char* module_name);
 
 	template <class T>
 	T Read(uintptr_t address)

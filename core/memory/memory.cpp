@@ -1,5 +1,4 @@
 #include "memory.h"
-#include <TlHelp32.h>
 #include <iostream>
 
 bool CMemory::GetProcessID(const char* process_name)
@@ -39,11 +38,12 @@ bool CMemory::GetProcessHandle()
 	return (this->m_hGame != INVALID_HANDLE_VALUE) ? true : false;
 }
 
-uintptr_t CMemory::GetProcessModule(const char* module_name)
+MODULEENTRY32 CMemory::GetModuleEntry(const char* module_name)
 {
-	uintptr_t processModule{};
+	MODULEENTRY32 mod{}; // Module structure
+
 	HANDLE hSnapshot{ CreateToolhelp32Snapshot(TH32CS_SNAPMODULE | TH32CS_SNAPMODULE32, this->m_dwPid) }; // Creating a snapshot of modules of the process
-	if (hSnapshot == INVALID_HANDLE_VALUE) return NULL;
+	if (hSnapshot == INVALID_HANDLE_VALUE) return MODULEENTRY32{};
 
 	MODULEENTRY32 me32{}; // Module structure
 	me32.dwSize = sizeof(MODULEENTRY32);
@@ -55,13 +55,13 @@ uintptr_t CMemory::GetProcessModule(const char* module_name)
 		{
 			if (_stricmp(me32.szModule, module_name) == 0)
 			{
-				processModule = (uintptr_t)me32.modBaseAddr;
+				mod = me32;
 				break;
 			}
 		} while (Module32Next(hSnapshot, &me32));
 	}
 	CloseHandle(hSnapshot);
-	return processModule;
+	return mod;
 }
 
 uintptr_t CMemory::ReadArray(const uintptr_t ptr, const uint32_t address_array[], const uint8_t size)

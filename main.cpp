@@ -12,40 +12,53 @@
 int __stdcall wWinMain(HINSTANCE instance, HINSTANCE previousInstance, PWSTR arguments, int commandShow)
 {
 	AllocConsole();
-	FILE* file;
-	freopen_s(&file, "CONOUT$", "w", stdout);
+	FILE* fs;
+	freopen_s(&fs, "CONOUT$", "w", stdout);
 
 	// Create GUI
 	gui::CreateHWindow("example window");
 	gui::CreateDevice();
 	gui::CreateImGui();
 	
-	// check for secure boot status
+	// Check for secure boot status
 	if (globals::IsSecureBootEnabled())
 	{
-		LogAndExit("[-] Secure boot has to be disabled.\n");
+		LogAndExit("[-] Secure boot has to be disabled.\n", fs);
 	}
 
 	// Find process & get necessities
 	if (!mem.GetProcessID("PathOfExileSteam.exe"))
 	{
-		LogAndExit("[-] Unable to find process.\n");
+		LogAndExit("[-] Unable to find process.\n", fs);
 	}
 
 	if (!mem.GetProcessHandle())
 	{
-		LogAndExit("[-] Unable to get handle of the process.\n");
+		LogAndExit("[-] Unable to get the handle of the process.\n", fs);
 	}
 
-	globals::BaseModule = mem.GetProcessModule("PathOfExileSteam.exe");
+	// Getting module data
+	MODULEENTRY32 mod = mem.GetModuleEntry("PathOfExileSteam.exe");
+	globals::BaseModule = (uintptr_t)mod.modBaseAddr;
 	if (!globals::BaseModule)
 	{
-		LogAndExit("[-] Unable to get handle of the process.\n");
+		LogAndExit("[-] Invalid Base Module.\n", fs);
+	}
+	globals::BaseModuleSize = (uintptr_t)mod.modBaseSize;
+	if (!globals::BaseModuleSize)
+	{
+		LogAndExit("[-] Invalid Base Module Size.\n", fs);
+	}
+
+	// Getting offsets
+	offsets::RunOffsetDumper();
+	if (!offsets::GetOffsetsFromDump()) {
+		LogAndExit("[-] Failed to get offsets from dump.\n", fs);
 	}
 
 	globals::BaseAddress = mem.Read<uintptr_t>(globals::BaseModule + offsets::player_base_address);
 	if (!globals::BaseAddress) {
-		LogAndExit("[-] Invalid Base Address\n");
+		LogAndExit("[-] Invalid Base Address\n", fs);
 	}
 	std::cout << std::hex << "Base Address: 0x" << globals::BaseAddress << '\n';
 
@@ -73,8 +86,8 @@ int __stdcall wWinMain(HINSTANCE instance, HINSTANCE previousInstance, PWSTR arg
 	gui::DestroyDevice();
 	gui::DestroyHWindow();
 
-	if (file != NULL)
-		fclose(file);
+	if (fs != NULL)
+		fclose(fs);
 
 	return EXIT_SUCCESS;
 }
