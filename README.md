@@ -1,7 +1,7 @@
 # unorthodoxclub-poe
-A simple Path of Exile hack.
+A simple Path of Exile hack. For educational purposes only!
 
-![showcase_image](https://github.com/antalnn/unorthodoxclub-poe/assets/58046021/30a21a23-d8b7-4840-9178-f5ed573ec2ee)
+![showcase_image](https://cdn.signed.host/63ef9c09f0b29dbfb5b2af3b/QgSVsI.png)
 
 ## Download
 Too lazy to update & compile yourself? You can download the latest version of the cheat at our <a href="https://discord.gg/aCQ7whJAgs">discord server</a>.
@@ -11,6 +11,7 @@ Too lazy to update & compile yourself? You can download the latest version of th
 - Auto-Heal
 - Auto-Mana
 - Zoom Hack
+- Config
 
 ## Compiling
 ### Prerequisites
