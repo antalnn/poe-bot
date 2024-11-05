@@ -1,4 +1,4 @@
-# unorthodoxclub-poe
+# poe-bot
 A simple Path of Exile hack. For educational purposes only!
 
 ![showcase_image](https://i.imgur.com/IlRsF2l.png)
