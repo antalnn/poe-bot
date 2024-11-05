@@ -1,10 +1,7 @@
 # unorthodoxclub-poe
 A simple Path of Exile hack. For educational purposes only!
 
-![showcase_image](https://cdn.signed.host/63ef9c09f0b29dbfb5b2af3b/QgSVsI.png)
-
-## Download
-Too lazy to update & compile yourself? You can download the latest version of the cheat at our <a href="https://discord.gg/aCQ7whJAgs">discord server</a>.
+![showcase_image](https://i.imgur.com/IlRsF2l.png)
 
 ## Features
 - Supports Steam version only
